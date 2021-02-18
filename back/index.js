@@ -4,10 +4,25 @@ const cors = require('cors');
 const decodeIDToken = require('./authenticateToken');
 const postsRouter = require('./controllers/posts');
 
+
 const app = express();
+
 app.use(cors());
 app.use(decodeIDToken);
 app.use(express.json());
+var server = require("http").Server(app);
+const socketio = require("socket.io")
+
+// socket.io
+io = socketio(server , {
+    cors: {
+      origin: '*',
+    }});
+// now all request have access to io
+app.use(function (req, res, next) {
+  req.io = io;
+  next();
+});
 
 mongoose.connect(
     'mongodb+srv://admin:k6TjIs1IQIyyyWZd@instaclone.uld3e.mongodb.net/instaclone?retryWrites=true&w=majority',
@@ -27,6 +42,6 @@ app.get('/', (req, res) => {
 
 const PORT = 3001;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Serveur is running on port ${PORT}`);
 });

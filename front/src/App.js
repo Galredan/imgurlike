@@ -4,8 +4,14 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Login from "./features/session/Login";
 import Posts from "./features/posts/Posts";
+import store from "./app/store";
+
 
 import fire from "./fire";
+
+import connect from './socket-api';
+
+connect("http://localhost:3001", store);
 
 const theme = {
   global: {
@@ -26,6 +32,7 @@ const theme = {
 
 function App() {
 
+
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   
     fire.auth().onAuthStateChanged((user) => {
@@ -35,6 +42,7 @@ function App() {
   console.log('logged in?', isLoggedIn);
   return (
     <Grommet theme={theme} full>
+    
       <Router>
         
         {!isLoggedIn
@@ -50,8 +58,7 @@ function App() {
             </Box>
           )}
       </Router>
-     
-  
+ 
     </Grommet>
   );
 }

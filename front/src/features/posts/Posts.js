@@ -9,10 +9,16 @@ import CardConcave from "../../components/CardConcave";
 
 import {addPost, getPosts} from "../../services/postsServices";
 
+import { useSelector, useDispatch } from 'react-redux';
+import {
+    update, selectPosts
+  } from './postsSlice';
 
 const Posts = () => {
 
-    const [posts, setposts] = React.useState();
+    const posts = useSelector(selectPosts);
+    const dispatch = useDispatch();
+
     const [content, setcontent] =React.useState();
     const [refresh, setrefresh] = React.useState(true);
 
@@ -20,7 +26,8 @@ const Posts = () => {
         e.preventDefault();
         
         if (content){
-            addPost(content)
+            addPost(content).then(()=>setrefresh(true) )
+            
         }
     }
 
@@ -28,7 +35,7 @@ const Posts = () => {
 
         const fecthPosts = async () => {
             const fetchData = await getPosts();
-            setposts(fetchData);
+            dispatch(update(fetchData));
         }
         if (refresh) {
             fecthPosts();
