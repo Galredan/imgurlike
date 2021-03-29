@@ -15,6 +15,12 @@ connect("http://localhost:3001", store);
 
 const theme = {
   global: {
+    focus:{
+      border : {
+        color: 'transparent'
+      }
+      
+    },
     colors: {
       brand: '#cc0000',
       back: "#292929",
@@ -39,7 +45,6 @@ function App() {
       return user ? setIsLoggedIn(true) : setIsLoggedIn(false);
   });
   
-  console.log('logged in?', isLoggedIn);
   return (
     <Grommet theme={theme} full>
     
@@ -52,9 +57,9 @@ function App() {
               </Route>
           ) 
           : (
-            <Box fill align="center" justify="center" background="back">
+            <Box fill align="center" justify="center" background="back" overflow="auto">
               <Posts />
-              <Button label="sign out" onClick={()=> fire.auth().signOut()} />
+              <Button label="sign out" onClick={()=> fire.auth().signOut()} margin={{bottom: "medium"}}/>
             </Box>
           )}
       </Router>

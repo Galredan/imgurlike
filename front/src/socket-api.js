@@ -12,8 +12,6 @@ const connect = (url, store) =>  {
   console.log('socket connected');
 
   io.on('UPDATE', data => {
-    console.log('socket received:', data);
-    
     store.dispatch(update(data));
   });
 

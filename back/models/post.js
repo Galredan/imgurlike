@@ -1,7 +1,13 @@
 const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema({
-    content: String
+    content: {
+        type: String,
+        required: true,
+    },
+    img: String,
+    likes: Array,
+    user: String,
 })
 
 postSchema.set('toJSON', {
